@@ -521,14 +521,14 @@
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-inner">
-            <a href="#" class="nav-logo">MSE</a>
+            <a href="#" class="nav-logo" onclick="return false;">MSE</a>
             <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about" class="nav-anchor">About</a></li>
+                <li><a href="#projects" class="nav-anchor">Projects</a></li>
+                <li><a href="#skills" class="nav-anchor">Skills</a></li>
+                <li><a href="#experience" class="nav-anchor">Experience</a></li>
+                <li><a href="#contact" class="nav-anchor">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -540,7 +540,7 @@
             <h1 class="hero-name">Mohammed Shabil E</h1>
             <p class="hero-tagline">Data Analytics Student | Self-Taught Builder of 3 Production Projects | Python & AI Integration | Open to Remote</p>
             <div class="hero-cta">
-                <a href="#projects" class="btn btn-primary">View Projects</a>
+                <a href="#projects" class="btn btn-primary hero-anchor">View Projects</a>
                 <a href="mailto:mhdshabil17@gmail.com" class="btn btn-secondary">Get in Touch</a>
             </div>
         </div>
@@ -754,6 +754,40 @@
             <p class="footer-cta">© 2026 Mohammed Shabil E</p>
         </div>
     </footer>
+
+    <!-- FORCE SAME-PAGE NAVIGATION -->
+    <script>
+    (function() {
+        // Override ALL clicks on hash links to prevent new tabs
+        document.addEventListener('click', function(e) {
+            var link = e.target.closest('a');
+            if (!link) return;
+
+            var href = link.getAttribute('href');
+            if (!href) return;
+
+            // If it's a hash link (starts with #), force same-page behavior
+            if (href.indexOf('#') === 0 && href.length > 1) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+
+                // Update URL without page reload
+                history.pushState(null, null, href);
+                return false;
+            }
+        }, true);
+
+        // Also strip any sneaky target="_blank" from nav anchors on load
+        document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+            link.removeAttribute('target');
+        });
+    })();
+    </script>
 
 </body>
 </html>
